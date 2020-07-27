@@ -102,28 +102,6 @@ namespace BTconnectGUI
 			InitializeComponent();
 		}
 
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			Stream iconstream = Application.GetResourceStream(new Uri("pack://application:,,,/BTconnectGUI;component/hgz.ico")).Stream;
-
-			TaskBarIcon = new NotifyIcon
-			{
-				Icon = new Icon(iconstream, SystemInformation.IconSize),
-				Text = @"BTconnect",
-				Visible = true
-			};
-
-			iconstream.Close();
-
-			TaskBarIcon.MouseClick += quickIcon_MouseClick;
-			TaskBarIcon.MouseDoubleClick += quickIcon_MouseDoubleClick;
-
-			Task.Run(delegate
-			{
-				check_home();
-			});
-		}
-
 		private void quickIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
@@ -154,6 +132,30 @@ namespace BTconnectGUI
 			Hide();
 
 			e.Cancel = true;
+		}
+
+		private void Window_Initialized(object sender, EventArgs e)
+		{
+			Stream iconstream = Application.GetResourceStream(new Uri("pack://application:,,,/BTconnectGUI;component/hgz.ico")).Stream;
+
+			TaskBarIcon = new NotifyIcon
+			{
+				Icon = new Icon(iconstream, SystemInformation.IconSize),
+				Text = @"BTconnect",
+				Visible = true
+			};
+
+			iconstream.Close();
+
+			TaskBarIcon.MouseClick += quickIcon_MouseClick;
+			TaskBarIcon.MouseDoubleClick += quickIcon_MouseDoubleClick;
+
+			Hide();
+
+			Task.Run(delegate
+			{
+				check_home();
+			});
 		}
 	}
 }
