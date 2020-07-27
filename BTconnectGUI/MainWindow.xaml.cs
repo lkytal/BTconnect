@@ -30,6 +30,7 @@ namespace BTconnectGUI
 	public partial class MainWindow : Window
 	{
 		private readonly NotificationManager notificationManager = new NotificationManager();
+		private NotifyIcon TaskBarIcon;
 
 		void log(string msg)
 		{
@@ -38,6 +39,13 @@ namespace BTconnectGUI
 
 				log_window.ScrollToEnd();
 			}));
+		}
+
+		void toast(string title, string msg)
+		{
+			notificationManager.Show(title: title, message: msg,
+				NotificationType.Notification, "", expirationTime: new TimeSpan(0, 0, 2),
+				onClick: () => log("act"), null);
 		}
 
 		void check_home()
@@ -60,7 +68,7 @@ namespace BTconnectGUI
 						}
 						else
 						{
-							notificationManager.Show("Reconnecting to Home", "BTconnect", new System.TimeSpan(2));
+							toast("BTconnect", "Reconnecting to Home");
 
 							log("reconnect " + Device.DeviceName + " : " + Device.DeviceAddress);
 
@@ -98,7 +106,7 @@ namespace BTconnectGUI
 		{
 			Stream iconstream = Application.GetResourceStream(new Uri("pack://application:,,,/BTconnectGUI;component/hgz.ico")).Stream;
 
-			var TaskBarIcon = new NotifyIcon
+			TaskBarIcon = new NotifyIcon
 			{
 				Icon = new Icon(iconstream, SystemInformation.IconSize),
 				Text = @"BTconnect",
@@ -108,20 +116,21 @@ namespace BTconnectGUI
 			iconstream.Close();
 
 			TaskBarIcon.MouseClick += quickIcon_MouseClick;
+			TaskBarIcon.MouseDoubleClick += quickIcon_MouseDoubleClick;
 
-			CheckLoop();
-
-			notificationManager.Show(title: "BTconnect", message: "Reconnecting to Home",
-				NotificationType.Notification, "", expirationTime: new TimeSpan(0, 0, 2),
-				onClick: () => log("act"), null);
-		}
-
-		private void CheckLoop()
-		{
 			Task.Run(delegate
 			{
 				check_home();
 			});
+		}
+
+		private void quickIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				TaskBarIcon.Dispose();
+				Application.Current.Shutdown();
+			}
 		}
 
 		private void quickIcon_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -140,9 +149,11 @@ namespace BTconnectGUI
 			}
 		}
 
-		private void Window_Closed(object sender, EventArgs e)
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			Application.Current.Shutdown();
+			Hide();
+
+			e.Cancel = true;
 		}
 	}
 }
