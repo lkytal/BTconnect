@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTconnect", "BTconnect\BTconnect.csproj", "{08861DC5-1CEB-4FBF-AB44-C817DCF881E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTconnectGUI", "BTconnectGUI\BTconnectGUI.csproj", "{144BA973-CB21-4369-92CE-D17568E139E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{08861DC5-1CEB-4FBF-AB44-C817DCF881E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08861DC5-1CEB-4FBF-AB44-C817DCF881E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08861DC5-1CEB-4FBF-AB44-C817DCF881E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144BA973-CB21-4369-92CE-D17568E139E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144BA973-CB21-4369-92CE-D17568E139E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144BA973-CB21-4369-92CE-D17568E139E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144BA973-CB21-4369-92CE-D17568E139E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
